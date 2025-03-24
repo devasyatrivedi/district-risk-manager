@@ -89,7 +89,7 @@ const Index = () => {
           </Card>
           
           {/* Risk Metrics Card */}
-          <Card className="card-shine animate-float">
+          <Card className="card-shine animate-float risk-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="flex items-center gap-2 text-xl font-medium">
                 <div className="p-1.5 rounded-lg bg-primary/10">
@@ -108,7 +108,7 @@ const Index = () => {
           </Card>
           
           {/* Districts Card */}
-          <Card className="md:col-span-2 card-shine animate-float">
+          <Card className="md:col-span-2 card-shine animate-float district-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="flex items-center gap-2 text-xl font-medium">
                 <div className="p-1.5 rounded-lg bg-primary/10">
@@ -126,10 +126,10 @@ const Index = () => {
               
               {districts.length > 0 && (
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {districts.slice(0, 2).map((district) => (
+                  {districts.slice(0, 2).map((district, index) => (
                     <div 
                       key={district.id} 
-                      className="p-3 rounded-lg border bg-card/50 flex items-center justify-between"
+                      className={`p-3 rounded-lg border bg-card/50 flex items-center justify-between animate-fade-in-up animate-delay-${index * 100}`}
                     >
                       <div>
                         <div className="font-medium">{district.name}</div>
@@ -149,7 +149,7 @@ const Index = () => {
         </div>
         
         {showForm && (
-          <Card className="w-full animate-fade-in">
+          <Card className="w-full animate-fade-in-up">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <PlusCircle className="h-5 w-5 text-primary" />
@@ -169,7 +169,7 @@ const Index = () => {
         
         {districts.length > 0 && (
           <>
-            <Card className="w-full animate-fade-in">
+            <Card className="w-full animate-fade-in-up">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <BarChart3 className="h-5 w-5 text-primary" />
@@ -185,7 +185,7 @@ const Index = () => {
               </CardContent>
             </Card>
             
-            <Card className="w-full animate-fade-in">
+            <Card className="w-full animate-fade-in-up">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-primary" />

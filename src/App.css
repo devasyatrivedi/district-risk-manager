@@ -54,3 +54,59 @@
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+.risk-card {
+  transition: all 0.3s ease;
+}
+
+.risk-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.district-card {
+  transition: all 0.3s ease;
+}
+
+.district-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.resource-meter {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #9b87f5 0%, #7E69AB 100%);
+  transition: width 0.5s ease-in-out;
+}
+
+.risk-badge {
+  animation: pulse-gentle 2s infinite ease-in-out;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+
+.animate-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animate-delay-300 {
+  animation-delay: 300ms;
+}

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Shield, User, Bell } from 'lucide-react';
+import { Shield, User, Bell, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header: React.FC = () => {
