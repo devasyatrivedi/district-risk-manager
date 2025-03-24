@@ -1,36 +1,9 @@
 
 import React from 'react';
-import { Shield, User, Bell, Menu, Download } from 'lucide-react';
+import { Shield, User, Bell, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { toast } from "sonner";
 
 const Header: React.FC = () => {
-  const handleDownload = () => {
-    // Create sample CSV data for districts
-    const csvHeader = "District Name,Population,Risk Score,Resource Demand\n";
-    const csvData = [
-      "Downtown,150000,78,45",
-      "Northside,85000,62,30",
-      "Westpark,65000,89,50",
-      "Eastview,110000,45,25",
-      "Southbay,95000,71,40",
-    ].join("\n");
-    
-    // Create the CSV content and encode it
-    const csvContent = csvHeader + csvData;
-    const encodedUri = "data:text/csv;charset=utf-8," + encodeURIComponent(csvContent);
-    
-    // Create a link element and trigger download
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "district_risk_report.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    toast.success("Report downloaded successfully");
-  };
-  
   return (
     <header className="w-full py-4 animate-fade-in bg-background border-b border-border/40">
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -42,15 +15,6 @@ const Header: React.FC = () => {
         </div>
         
         <div className="flex items-center space-x-3">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="flex items-center gap-2 rounded-full"
-            onClick={handleDownload}
-          >
-            <Download className="h-4 w-4" />
-            <span className="hidden sm:inline">Download Report</span>
-          </Button>
           <Button variant="ghost" size="icon" className="rounded-full">
             <Bell className="h-5 w-5 text-muted-foreground" />
           </Button>
