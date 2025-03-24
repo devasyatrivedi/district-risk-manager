@@ -7,7 +7,7 @@ import ResourceAllocation from '@/components/ResourceAllocation';
 import { calculateDistrictRisk } from '@/utils/riskCalculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, PlusCircle, BarChart3 } from 'lucide-react';
+import { ChevronRight, PlusCircle, BarChart3, MapPin, AlertTriangle } from 'lucide-react';
 import { Toaster } from 'sonner';
 
 const Index = () => {
@@ -42,49 +42,61 @@ const Index = () => {
   return (
     <div className="min-h-screen pb-16 bg-background">
       <Header />
-      <main className="container mx-auto px-4 py-6 space-y-4">
-        <Card className="w-full animate-fade-in">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xl font-medium">Resources Balance</CardTitle>
-            <Button variant="ghost" size="sm" className="text-muted-foreground">
-              Configure <ChevronRight className="ml-1 h-4 w-4" />
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <div className="text-4xl font-bold py-4">{totalResources}</div>
-            <div className="grid grid-cols-2 gap-2">
-              <Button 
-                variant="outline" 
-                onClick={() => setShowForm(true)}
-                className="flex items-center justify-center gap-2 bg-muted/50 hover:bg-muted"
-              >
-                <PlusCircle className="h-5 w-5" />
-                Add District
-              </Button>
-              <Button 
-                variant="outline"
-                onClick={() => {
-                  const input = window.prompt("Enter total resources:");
-                  if (input) {
-                    const resources = parseInt(input);
-                    if (!isNaN(resources) && resources > 0) {
-                      setTotalResources(resources);
-                    }
-                  }
-                }}
-                className="flex items-center justify-center gap-2 bg-muted/50 hover:bg-muted"
-              >
-                <BarChart3 className="h-5 w-5" />
-                Set Resources
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="w-full animate-fade-in">
+      <main className="container mx-auto px-4 py-8 space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Resource Balance Card */}
+          <Card className="col-span-1 md:col-span-3 card-shine">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xl font-medium">Risk Metrics</CardTitle>
+              <CardTitle className="flex items-center gap-2 text-xl font-medium">
+                <div className="p-1.5 rounded-lg bg-primary/10">
+                  <BarChart3 className="h-5 w-5 text-primary" />
+                </div>
+                Resources Balance
+              </CardTitle>
+              <Button variant="ghost" size="sm" className="text-muted-foreground">
+                Configure <ChevronRight className="ml-1 h-4 w-4" />
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <div className="text-5xl font-bold py-4">{totalResources}</div>
+              <div className="grid grid-cols-2 gap-2">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowForm(true)}
+                  className="flex items-center justify-center gap-2 bg-muted/50 hover:bg-muted"
+                >
+                  <PlusCircle className="h-5 w-5" />
+                  Add District
+                </Button>
+                <Button 
+                  variant="outline"
+                  onClick={() => {
+                    const input = window.prompt("Enter total resources:");
+                    if (input) {
+                      const resources = parseInt(input);
+                      if (!isNaN(resources) && resources > 0) {
+                        setTotalResources(resources);
+                      }
+                    }
+                  }}
+                  className="flex items-center justify-center gap-2 bg-muted/50 hover:bg-muted"
+                >
+                  <BarChart3 className="h-5 w-5" />
+                  Set Resources
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+          
+          {/* Risk Metrics Card */}
+          <Card className="card-shine animate-float">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="flex items-center gap-2 text-xl font-medium">
+                <div className="p-1.5 rounded-lg bg-primary/10">
+                  <AlertTriangle className="h-5 w-5 text-primary" />
+                </div>
+                Risk Metrics
+              </CardTitle>
               <Button variant="ghost" size="sm" className="text-muted-foreground">
                 Details <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
@@ -95,9 +107,15 @@ const Index = () => {
             </CardContent>
           </Card>
           
-          <Card className="w-full animate-fade-in">
+          {/* Districts Card */}
+          <Card className="md:col-span-2 card-shine animate-float">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xl font-medium">Districts</CardTitle>
+              <CardTitle className="flex items-center gap-2 text-xl font-medium">
+                <div className="p-1.5 rounded-lg bg-primary/10">
+                  <MapPin className="h-5 w-5 text-primary" />
+                </div>
+                Districts
+              </CardTitle>
               <Button variant="ghost" size="sm" className="text-muted-foreground">
                 View All <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
@@ -105,6 +123,27 @@ const Index = () => {
             <CardContent>
               <div className="text-4xl font-bold py-4">{districts.length}</div>
               <p className="text-muted-foreground text-sm">Total districts under management</p>
+              
+              {districts.length > 0 && (
+                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {districts.slice(0, 2).map((district) => (
+                    <div 
+                      key={district.id} 
+                      className="p-3 rounded-lg border bg-card/50 flex items-center justify-between"
+                    >
+                      <div>
+                        <div className="font-medium">{district.name}</div>
+                        <div className="text-sm text-muted-foreground">
+                          Risk: {district.riskScore}
+                        </div>
+                      </div>
+                      <div className="h-8 w-8 flex items-center justify-center rounded-full bg-muted">
+                        <MapPin className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -112,7 +151,10 @@ const Index = () => {
         {showForm && (
           <Card className="w-full animate-fade-in">
             <CardHeader>
-              <CardTitle>Add New District</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <PlusCircle className="h-5 w-5 text-primary" />
+                Add New District
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <DistrictForm 
@@ -129,7 +171,10 @@ const Index = () => {
           <>
             <Card className="w-full animate-fade-in">
               <CardHeader>
-                <CardTitle>Resource Allocation</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart3 className="h-5 w-5 text-primary" />
+                  Resource Allocation
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <ResourceAllocation
@@ -142,7 +187,10 @@ const Index = () => {
             
             <Card className="w-full animate-fade-in">
               <CardHeader>
-                <CardTitle>District Overview</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5 text-primary" />
+                  District Overview
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <DistrictList 
